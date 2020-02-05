@@ -1,0 +1,55 @@
+{
+  "name": "serverless-prune-versions",
+  "version": "0.1.0",
+  "description": "Serverless plugin to delete old versions of deployed functions from AWS",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "test": "jest --coverage",
+    "codecov": "codecov -f coverage/*.json",
+    "publish-please": "publish-please",
+    "prepublishOnly": "publish-please guard && npm run build"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.7.0",
+    "babel-jest": "^25.1.0",
+    "husky": "^2.7.0",
+    "jest": "^25.1.0",
+    "rimraf": "^3.0.1",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run build"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manwaring/serverless-prune-versions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manwaring/serverless-prune-versions"
+  },
+  "homepage": "https://github.com/manwaring/serverless-prune-versions",
+  "main": "dist/plugin.js",
+  "types": "dist/plugin.d.ts",
+  "author": "From Phillip with ♥",
+  "license": "MIT",
+  "keywords": [
+    "serverless",
+    "serverless-plugin",
+    "aws",
+    "aws-lambda",
+    "lambda",
+    "prune",
+    "versions"
+  ]
+}
