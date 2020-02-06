@@ -4,15 +4,30 @@ declare interface PruneConfig {
   number?: number;
 }
 
+declare interface PruneSettings {
+  stage?: string;
+  region?: string;
+  automatic?: boolean;
+  includeLayers?: boolean;
+  number?: number;
+  dryRun?: boolean;
+  noDeploy?: boolean;
+  function?: string;
+  layer?: string;
+}
+
 declare namespace Serverless {
   interface Options {
     number?: number;
+    n?: number;
     stage?: string;
     region?: string;
     function?: string;
     layer?: string;
     includeLayers?: boolean;
+    i?: boolean;
     dryRun?: boolean;
+    d?: boolean;
     noDeploy?: boolean;
   }
 

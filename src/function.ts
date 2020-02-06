@@ -1,19 +1,15 @@
 import { LOG_PREFIX } from './log';
+import { Settings } from './settings';
 
 export class LambdaFunction {
   private provider: Serverless.Provider.Aws;
-  constructor(
-    private name: string,
-    private config: PruneConfig,
-    private options: Serverless.Options,
-    private serverless: Serverless
-  ) {
+  constructor(private name: string, private settings: Settings, private serverless: Serverless) {
     this.provider = serverless.getProvider('aws');
   }
 
   public async deleteVersions(): Promise<any> {
     const versionsToDelete = await this.getVersionsToDelete();
-    if (!this.options.dryRun) {
+    if (!this.settings.dryRun) {
       await Promise.all(versionsToDelete.map(version => this.deleteVersion(version)));
     }
   }
@@ -29,12 +25,12 @@ export class LambdaFunction {
         const v2 = parseInt(version2);
         return v1 === v2 ? 0 : v1 > v2 ? -1 : 1;
       })
-      .slice(this.config.number);
+      .slice(this.settings.number);
 
     const message = `The ${this.name} function has ${versions.length - 1} versions and ${aliases.length} aliases: ${
       versionsToDelete.length
     } versions will be pruned`;
-    if (this.options.dryRun) {
+    if (this.settings.dryRun) {
       this.log(message);
     } else {
       this.debug(message);

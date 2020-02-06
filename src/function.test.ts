@@ -9,6 +9,7 @@ import {
   providerFunctionNotDeployed,
   providerWithNextMarkers
 } from './mock-data/provider';
+import { Settings } from './settings';
 
 describe('Lambda function', () => {
   const ORIGINAL_ENV = process.env;
@@ -21,14 +22,16 @@ describe('Lambda function', () => {
   describe('Basic setup', () => {
     it('Instantiates with valid inputs', () => {
       const mockServerless = getServerlessWithFunctions();
-      new LambdaFunction('name', defaultConfig, defaultOptions, mockServerless);
+      const mockSettings = new Settings(defaultConfig);
+      new LambdaFunction('name', mockSettings, mockServerless);
     });
 
     it('Handles truncated aws calls', async () => {
       const mockServerless = getServerlessWithFunctions(defaultConfig, providerWithNextMarkers);
+      const mockSettings = new Settings(defaultConfig);
       const functionName = 'name';
 
-      const lambda = new LambdaFunction(functionName, defaultConfig, defaultOptions, mockServerless);
+      const lambda = new LambdaFunction(functionName, mockSettings, mockServerless);
       await lambda.deleteVersions();
 
       expect(providerWithNextMarkers.request).toHaveBeenCalledWith('Lambda', 'listVersionsByFunction', {
@@ -52,9 +55,10 @@ describe('Lambda function', () => {
     it('Deletes versions', async () => {
       process.env.SLS_DEBUG = '*';
       const mockServerless = getServerlessWithFunctions(defaultConfig, providerWithVersions);
+      const mockSettings = new Settings(defaultConfig);
       const functionName = 'name';
 
-      const lambda = new LambdaFunction(functionName, defaultConfig, defaultOptions, mockServerless);
+      const lambda = new LambdaFunction(functionName, mockSettings, mockServerless);
       await lambda.deleteVersions();
 
       expect(console.log).toHaveBeenCalledWith(
@@ -69,9 +73,10 @@ describe('Lambda function', () => {
     it("Can't delete Lambda@Edge versions", async () => {
       process.env.SLS_DEBUG = '*';
       const mockServerless = getServerlessWithFunctions(defaultConfig, providerWithReplicatedVersions);
+      const mockSettings = new Settings(defaultConfig);
       const functionName = 'name';
 
-      const lambda = new LambdaFunction(functionName, defaultConfig, defaultOptions, mockServerless);
+      const lambda = new LambdaFunction(functionName, mockSettings, mockServerless);
       await lambda.deleteVersions();
 
       expect(console.log).toHaveBeenCalledWith(
@@ -89,9 +94,10 @@ describe('Lambda function', () => {
     it("Can't delete functions that aren't deployed", async () => {
       process.env.SLS_DEBUG = '*';
       const mockServerless = getServerlessWithFunctions(defaultConfig, providerFunctionNotDeployed);
+      const mockSettings = new Settings(defaultConfig);
       const functionName = 'name';
 
-      const lambda = new LambdaFunction(functionName, defaultConfig, defaultOptions, mockServerless);
+      const lambda = new LambdaFunction(functionName, mockSettings, mockServerless);
       await lambda.deleteVersions();
 
       expect(console.log).toHaveBeenCalledWith(

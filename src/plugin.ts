@@ -2,19 +2,19 @@ import { ok, deepStrictEqual } from 'assert';
 import { commands } from './commands';
 import { LambdaFunction } from './function';
 import { LOG_PREFIX } from './log';
+import { Settings } from './settings';
 
 export class PrunePlugin {
-  private config: PruneConfig;
+  private settings: Settings;
   private hooks = {
     'prune:prune': this.standalonePrune.bind(this),
     'after:deploy:deploy': this.postDeployPrune.bind(this)
   };
   private commands = commands;
 
-  constructor(private serverless: Serverless, private options?: Serverless.Options) {
-    this.config = this.getConfig(serverless.service?.custom?.prune, options);
+  constructor(private serverless: Serverless, rawOptions?: Serverless.Options) {
+    this.settings = new Settings(serverless.service?.custom?.prune, rawOptions);
     this.validateServerlessYml();
-    this.validatePruneConfig(this.config);
   }
 
   postDeployPrune(): Promise<any> {
@@ -26,7 +26,7 @@ export class PrunePlugin {
   }
 
   private prune(): Promise<any> {
-    if (this.config.includeLayers) {
+    if (this.settings.includeLayers) {
       this.log('Pruning Lambda function versions and layers...');
       return Promise.all([this.pruneVersions(), this.pruneLayers()]);
     } else {
@@ -44,37 +44,12 @@ export class PrunePlugin {
     deepStrictEqual(providerName, 'aws', `This plugin only supports AWS as a provider`);
   }
 
-  private validatePruneConfig({ automatic, includeLayers, number }: PruneConfig) {
-    ok(typeof automatic === 'boolean', this.validationMsg('automatic', 'true or false', typeof automatic));
-    ok(typeof includeLayers === 'boolean', this.validationMsg('includeLayers', 'true or false', typeof includeLayers));
-    ok(typeof number === 'number', this.validationMsg('number', 'an integer greater than 1', typeof number));
-    ok(number > 1, this.validationMsg('number', 'an integer greater than 1', number));
-  }
-
-  private validationMsg(property: string, expected: string, actual: any): string {
-    return `The prune config '${property}' property can only be ${expected}, not ${actual}`;
-  }
-
-  private getConfig(customConfig: any, configOptions?: Serverless.Options): PruneConfig {
-    const defaultConfig: PruneConfig = {
-      automatic: false,
-      includeLayers: false,
-      number: 5
-    };
-    this.debug(`Default config ${JSON.stringify(defaultConfig)}`);
-    this.debug(`Custom config ${JSON.stringify(customConfig)}`);
-    this.debug(`Config options ${JSON.stringify(configOptions)}`);
-    const config = { ...defaultConfig, ...customConfig, ...configOptions };
-    this.debug(`Config ${JSON.stringify(config)}`);
-    return config;
-  }
-
   private shouldPostDeployPrune(): boolean {
-    const noDeploy = this.options.noDeploy === true;
+    const noDeploy = this.settings.noDeploy === true;
     if (noDeploy) {
       this.log("Skipping pruning because 'noDeploy' was set to true");
     }
-    const automaticPruning = this.config.automatic === true;
+    const automaticPruning = this.settings.automatic === true;
     if (!automaticPruning) {
       this.log("Skipping pruning because 'automatic' wasn't set to true");
     }
@@ -82,13 +57,13 @@ export class PrunePlugin {
   }
 
   private async pruneVersions(): Promise<any> {
-    const functions = this.options.function ? [this.options.function] : this.serverless.service.getAllFunctions();
+    const functions = this.settings.function ? [this.settings.function] : this.serverless.service.getAllFunctions();
     const functionsToPrune = functions.map(f => {
       const name = this.serverless.service.getFunction(f).name;
-      return new LambdaFunction(name, this.config, this.options, this.serverless);
+      return new LambdaFunction(name, this.settings, this.serverless);
     });
     await Promise.all(functionsToPrune.map(f => f.deleteVersions()));
-    if (this.options.dryRun) {
+    if (this.settings.dryRun) {
       this.log('Dry run complete, no versions have been removed');
     } else {
       this.log(`Pruning complete, pruned ${functionsToPrune.length} functions`);
@@ -110,5 +85,3 @@ export class PrunePlugin {
     }
   }
 }
-
-//  PrunePlugin;
