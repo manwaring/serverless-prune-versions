@@ -7,11 +7,12 @@ export class LambdaFunction {
     this.provider = serverless.getProvider('aws');
   }
 
-  public async deleteVersions(): Promise<any> {
+  public async deleteVersions(): Promise<boolean> {
     const versionsToDelete = await this.getVersionsToDelete();
     if (!this.settings.dryRun) {
       await Promise.all(versionsToDelete.map(version => this.deleteVersion(version)));
     }
+    return versionsToDelete.length > 0;
   }
 
   private async getVersionsToDelete(): Promise<string[]> {
