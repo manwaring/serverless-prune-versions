@@ -19,7 +19,6 @@ export class Settings implements PruneSettings {
 
   private getSettings(config: PruneConfig, rawOptions?: Serverless.Options): PruneSettings {
     const options = this.cleanRawOptions(rawOptions);
-    // const config = this.mapRawConfigToFullProperties(rawConfig);
     const defaultConfig: PruneConfig = {
       automatic: false,
       includeLayers: false,
@@ -28,8 +27,6 @@ export class Settings implements PruneSettings {
     const settings = options ? { ...defaultConfig, ...config, ...options } : { ...defaultConfig, ...config };
     return settings;
   }
-
-  // private mapRawConfigToFullProperties(rawConfig?: PruneConfig): PruneSettings {}
 
   private cleanRawOptions(rawOptions?: Serverless.Options): PruneSettings {
     if (rawOptions) {
