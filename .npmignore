@@ -5,6 +5,7 @@ dist/**/*.test*
 dist/**/*/mock-data/**
 src/
 typings/
+.babelrc.js
 .gitignore
 .npmignore
 .nycrc.yml
