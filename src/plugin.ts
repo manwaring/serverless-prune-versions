@@ -70,7 +70,7 @@ export class PrunePlugin {
     } else if (functionsToPrune.length > 0) {
       this.log(`Pruning complete, pruned ${functionsToPrune.length} of ${functions.length} functions`);
     } else if (functionsToPrune.length === 0) {
-      this.log(`Pruning complete, no versions to prune of ${functions.length} functions`);
+      this.log(`Pruning complete, no versions to prune for ${functions.length} functions`);
     }
     return;
   }
