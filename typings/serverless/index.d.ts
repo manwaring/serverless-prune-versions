@@ -18,8 +18,8 @@ declare interface PruneSettings {
 
 declare namespace Serverless {
   interface Options {
-    number?: number;
-    n?: number;
+    number?: string;
+    n?: string;
     stage?: string;
     region?: string;
     function?: string;

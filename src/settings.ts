@@ -17,8 +17,9 @@ export class Settings implements PruneSettings {
     Object.assign(this, settings);
   }
 
-  private getSettings(config: Serverless.Options, rawOptions?: Serverless.Options): PruneSettings {
-    const options = this.mapOptionShortcutsToFullProperties(rawOptions);
+  private getSettings(config: PruneConfig, rawOptions?: Serverless.Options): PruneSettings {
+    const options = this.cleanRawOptions(rawOptions);
+    // const config = this.mapRawConfigToFullProperties(rawConfig);
     const defaultConfig: PruneConfig = {
       automatic: false,
       includeLayers: false,
@@ -28,20 +29,22 @@ export class Settings implements PruneSettings {
     return settings;
   }
 
-  private mapOptionShortcutsToFullProperties(rawOptions?: Serverless.Options): PruneSettings {
-    if (rawOptions?.d) {
-      rawOptions['dryRun'] = rawOptions.d;
-      delete rawOptions.d;
+  // private mapRawConfigToFullProperties(rawConfig?: PruneConfig): PruneSettings {}
+
+  private cleanRawOptions(rawOptions?: Serverless.Options): PruneSettings {
+    if (rawOptions) {
+      const replacementKeys = { n: 'number', d: 'dryRun', i: 'includeLayers' };
+      const replacedOptions = Object.keys(rawOptions).map(key => {
+        const newKey = replacementKeys[key] || key;
+        const value = rawOptions[key];
+        const newValue = value && JSON.parse(value);
+        return { [newKey]: newValue };
+      });
+      const options = replacedOptions.reduce((option1, option2) => Object.assign({}, option1, option2));
+      return options;
+    } else {
+      return undefined;
     }
-    if (rawOptions?.n) {
-      rawOptions['number'] = rawOptions.n;
-      delete rawOptions.n;
-    }
-    if (rawOptions?.i) {
-      rawOptions['includeLayers'] = rawOptions.i;
-      delete rawOptions.i;
-    }
-    return rawOptions;
   }
 
   private validate({ automatic, includeLayers, number }: PruneConfig) {

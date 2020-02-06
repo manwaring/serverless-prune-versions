@@ -1,11 +1,11 @@
 export const defaultOptions: Serverless.Options = {
   stage: '',
   region: '',
-  number: 5
+  number: '5'
 };
 
 export const invalidOptions = {
-  number: 0
+  number: '0'
 };
 
 export const dryRunOptions = {
