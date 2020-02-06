@@ -58,19 +58,17 @@ export class PrunePlugin {
 
   private async pruneVersions(): Promise<any> {
     const functions = this.settings.function ? [this.settings.function] : this.serverless.service.getAllFunctions();
-    const functionsToPrune = functions
-      .map(f => {
-        const name = this.serverless.service.getFunction(f).name;
-        return new LambdaFunction(name, this.settings, this.serverless);
-      })
-      .filter(lambda => lambda.shouldDeleteVersions());
+    const functionsToPrune = functions.map(f => {
+      const name = this.serverless.service.getFunction(f).name;
+      return new LambdaFunction(name, this.settings, this.serverless);
+    });
     await Promise.all(functionsToPrune.map(f => f.deleteVersions()));
     if (this.settings.dryRun) {
       this.log('Dry run complete, no versions have been removed');
     } else if (functionsToPrune.length > 0) {
-      this.log(`Pruning complete, pruned ${functionsToPrune.length} of ${functions.length} functions`);
+      this.log(`Pruning complete, pruned ${functionsToPrune.length} functions`);
     } else if (functionsToPrune.length === 0) {
-      this.log(`Pruning complete, no versions to prune for ${functions.length} functions`);
+      this.log(`Pruning complete, no versions to prune for ${functionsToPrune.length} functions`);
     }
     return;
   }
