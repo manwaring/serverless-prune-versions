@@ -34,7 +34,8 @@ export class Settings implements PruneSettings {
       const replacedOptions = Object.keys(rawOptions).map(key => {
         const newKey = replacementKeys[key] || key;
         const value = rawOptions[key];
-        const newValue = value && JSON.parse(value);
+        const numberValue = parseInt(value);
+        const newValue = isNaN(numberValue) ? value : numberValue;
         return { [newKey]: newValue };
       });
       const options = replacedOptions.reduce((option1, option2) => Object.assign({}, option1, option2));
