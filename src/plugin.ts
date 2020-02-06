@@ -61,7 +61,12 @@ export class PrunePlugin {
       includeLayers: false,
       number: 5
     };
-    return { ...defaultConfig, ...customConfig, ...configOptions };
+    this.debug(`Default config ${JSON.stringify(defaultConfig)}`);
+    this.debug(`Custom config ${JSON.stringify(customConfig)}`);
+    this.debug(`Config options ${JSON.stringify(configOptions)}`);
+    const config = { ...defaultConfig, ...customConfig, ...configOptions };
+    this.debug(`Config ${JSON.stringify(config)}`);
+    return config;
   }
 
   private shouldPostDeployPrune(): boolean {
@@ -85,6 +90,8 @@ export class PrunePlugin {
     await Promise.all(functionsToPrune.map(f => f.deleteVersions()));
     if (this.options.dryRun) {
       this.log('Dry run complete, no versions have been removed');
+    } else {
+      this.log(`Pruning complete, pruned ${functionsToPrune.length} functions`);
     }
     return;
   }
