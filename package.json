@@ -20,6 +20,7 @@
     "codecov": "^3.6.4",
     "husky": "^2.7.0",
     "jest": "^25.1.0",
+    "publish-please": "^5.5.1",
     "rimraf": "^3.0.1",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
