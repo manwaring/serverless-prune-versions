@@ -1,10 +1,9 @@
 import { LambdaFunction } from './function';
 import { LOG_PREFIX } from './log';
 import { defaultConfig } from './mock-data/config';
-import { defaultOptions } from './mock-data/options';
 import { getServerlessWithFunctions } from './mock-data/serverless';
 import {
-  providerWithVersions,
+  providerWithFunctionVersions,
   providerWithReplicatedVersions,
   providerFunctionNotDeployed,
   providerWithNextMarkers
@@ -54,7 +53,7 @@ describe('Lambda function', () => {
   describe('Function versions', () => {
     it('Deletes versions', async () => {
       process.env.SLS_DEBUG = '*';
-      const mockServerless = getServerlessWithFunctions(defaultConfig, providerWithVersions);
+      const mockServerless = getServerlessWithFunctions(defaultConfig, providerWithFunctionVersions);
       const mockSettings = new Settings(defaultConfig);
       const functionName = 'name';
 
@@ -64,7 +63,7 @@ describe('Lambda function', () => {
       expect(console.log).toHaveBeenCalledWith(
         `${LOG_PREFIX} The ${functionName} function has 3 versions and 1 aliases: 1 versions will be pruned`
       );
-      expect(providerWithVersions.request).toHaveBeenCalledWith('Lambda', 'deleteFunction', {
+      expect(providerWithFunctionVersions.request).toHaveBeenCalledWith('Lambda', 'deleteFunction', {
         FunctionName: functionName,
         Qualifier: 1
       });
@@ -82,7 +81,7 @@ describe('Lambda function', () => {
       expect(console.log).toHaveBeenCalledWith(
         `${LOG_PREFIX} The ${functionName} function has 3 versions and 1 aliases: 1 versions will be pruned`
       );
-      expect(providerWithVersions.request).toHaveBeenCalledWith('Lambda', 'deleteFunction', {
+      expect(providerWithFunctionVersions.request).toHaveBeenCalledWith('Lambda', 'deleteFunction', {
         FunctionName: functionName,
         Qualifier: 1
       });
@@ -103,12 +102,6 @@ describe('Lambda function', () => {
       expect(console.log).toHaveBeenCalledWith(
         `${LOG_PREFIX} Couldn't get ${functionName} versions because the function isn't deployed`
       );
-    });
-  });
-
-  describe('Layer versions', () => {
-    it('', () => {
-      // TODO
     });
   });
 });

@@ -23,7 +23,7 @@ export class LambdaLayer {
         const v2 = parseInt(version2);
         return v1 === v2 ? 0 : v1 > v2 ? -1 : 1;
       })
-      .slice(this.settings.number);
+      .slice(this.settings.number + 1);
 
     const message = `The ${this.name} layer has ${versions.length - 1} versions: ${
       versionsToDelete.length
