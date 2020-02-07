@@ -1,6 +1,7 @@
 import { ok, deepStrictEqual } from 'assert';
 import { commands } from './commands';
 import { LambdaFunction } from './function';
+import { LambdaLayer } from './layer';
 import { LOG_PREFIX } from './log';
 import { Settings } from './settings';
 
@@ -65,16 +66,34 @@ export class PrunePlugin {
     const prunedVersions = await Promise.all(functionsToPrune.map(f => f.deleteVersions()));
     const didPrune = prunedVersions.filter(pruned => pruned);
     if (this.settings.dryRun) {
-      this.log('Dry run complete, no versions have been removed');
+      this.log('Dry run complete, no function versions have been removed');
     } else if (didPrune.length > 0) {
-      this.log(`Pruning complete, pruned ${didPrune.length} of ${functionsToPrune.length} functions`);
+      this.log(
+        `Function version pruning complete, pruned versions from ${didPrune.length} of ${functionsToPrune.length} functions`
+      );
     } else if (didPrune.length === 0) {
-      this.log(`Pruning complete, no versions to prune for ${functionsToPrune.length} functions`);
+      this.log(`Function version pruning complete, no versions to prune in ${functionsToPrune.length} functions`);
     }
     return;
   }
 
-  private pruneLayers(): Promise<any> {
+  private async pruneLayers(): Promise<any> {
+    const layers = this.settings.layer ? [this.settings.layer] : this.serverless.service.getAllLayers();
+    const layersToPrune = layers.map(l => {
+      const name = this.serverless.service.getLayer(l).name;
+      return new LambdaLayer(name, this.settings, this.serverless);
+    });
+    const prunedLayers = await Promise.all(layersToPrune.map(l => l.deleteVersions()));
+    const didPrune = prunedLayers.filter(pruned => pruned);
+    if (this.settings.dryRun) {
+      this.log('Dry run complete, no layer versions have been removed');
+    } else if (didPrune.length > 0) {
+      this.log(
+        `Layer version pruning complete, pruned versions from ${didPrune.length} of ${layersToPrune.length} layers`
+      );
+    } else if (didPrune.length === 0) {
+      this.log(`Layer version pruning complete, no versions to prune in ${layersToPrune.length} layers`);
+    }
     return;
   }
 

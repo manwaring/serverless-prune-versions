@@ -36,7 +36,9 @@ describe('Prune plugin', () => {
       const plugin = new PrunePlugin(mockServerless, dryRunOptions);
       await plugin.postDeployPrune();
 
-      expect(console.log).toHaveBeenCalledWith(`${LOG_PREFIX} Dry run complete, no versions have been removed`);
+      expect(console.log).toHaveBeenCalledWith(
+        `${LOG_PREFIX} Dry run complete, no function versions have been removed`
+      );
     });
 
     it("Doesn't run when sls set to noDeploy", async () => {
@@ -68,7 +70,9 @@ describe('Prune plugin', () => {
       const plugin = new PrunePlugin(mockServerless, dryRunOptions);
       await plugin.standalonePrune();
 
-      expect(console.log).toHaveBeenCalledWith(`${LOG_PREFIX} Dry run complete, no versions have been removed`);
+      expect(console.log).toHaveBeenCalledWith(
+        `${LOG_PREFIX} Dry run complete, no function versions have been removed`
+      );
     });
   });
 });

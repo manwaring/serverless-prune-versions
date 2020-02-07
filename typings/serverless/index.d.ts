@@ -52,11 +52,9 @@ declare interface Serverless {
 
   service: {
     getAllFunctions(): string[];
-    getFunction(
-      string
-    ): {
-      name: string;
-    };
+    getAllLayers(): string[];
+    getFunction(string): { name: string };
+    getLayer(string): { name: string };
 
     custom?: {
       prune?: PruneConfig;
