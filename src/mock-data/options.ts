@@ -4,6 +4,8 @@ export const defaultOptions: Serverless.Options = {
   number: '5'
 };
 
+export const emptyOptions = {};
+
 export const invalidOptions = {
   number: '0'
 };

@@ -29,7 +29,7 @@ export class Settings implements PruneSettings {
   }
 
   private cleanRawOptions(rawOptions?: Serverless.Options): PruneSettings {
-    if (rawOptions) {
+    if (rawOptions && Object.keys(rawOptions).length > 0) {
       const replacementKeys = { n: 'number', d: 'dryRun', i: 'includeLayers' };
       const replacedOptions = Object.keys(rawOptions).map(key => {
         const newKey = replacementKeys[key] || key;

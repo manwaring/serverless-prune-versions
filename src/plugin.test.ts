@@ -1,7 +1,7 @@
 import { PrunePlugin } from './plugin';
 import { LOG_PREFIX } from './log';
 import { getServerless, getServerlessWithFunctions } from './mock-data/serverless';
-import { defaultOptions, invalidOptions, dryRunOptions, noDeployOptions } from './mock-data/options';
+import { defaultOptions, invalidOptions, dryRunOptions, noDeployOptions, emptyOptions } from './mock-data/options';
 import { invalidConfig, disabledConfig } from './mock-data/config';
 
 describe('Prune plugin', () => {
@@ -26,6 +26,11 @@ describe('Prune plugin', () => {
       const mockInvalidServerless = getServerless(invalidConfig);
       // @ts-ignore
       expect(() => new PrunePlugin(mockInvalidServerless)).toThrow();
+    });
+
+    it('Instantiates with empty default options', () => {
+      const mockServerless = getServerless();
+      new PrunePlugin(mockServerless, emptyOptions);
     });
   });
 
