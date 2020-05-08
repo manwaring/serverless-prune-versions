@@ -1,6 +1,6 @@
 <p align="center">
-  <img height="140" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
-  <img height="140" src="https://user-images.githubusercontent.com/2955468/73897809-44170200-4855-11ea-9356-f1587a537b65.png">
+  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/manwaring/serverless-prune-versions/readme-category-icon.png">
+  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/manwaring/serverless-prune-versions/readme-repo-icon.png">
 </p>
 
 <p align="center">
