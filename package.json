@@ -1,6 +1,6 @@
 {
   "name": "serverless-prune-versions",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Serverless plugin to delete old versions of deployed functions from AWS",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -43,6 +43,9 @@
   "homepage": "https://github.com/manwaring/serverless-prune-versions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "author": "From Phillip with ♥",
   "license": "MIT",
   "keywords": [

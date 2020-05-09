@@ -1,15 +1,1 @@
-.circleci/
-.dependabot/
-coverage/
-dist/**/*.test*
-dist/**/*/mock-data/**
-src/
-typings/
-.babelrc.js
-.gitignore
-.npmignore
-.nycrc.yml
-.prettierrc.yml
-.publishrc
-jest.config.js
-tsconfig*.json
+.test.
