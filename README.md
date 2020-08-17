@@ -28,3 +28,5 @@
 </p>
 
 # Serverless prune versions
+
+<img height="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring/serverless-prune-versions?style=flat-square">
