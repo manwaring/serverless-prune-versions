@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://npmjs.com/package/serverless-prune-versions">
-    <img src="https://flat.badgen.net/npm/v/serverless-prune-versions?icon=npm&label=npm@latest"></a>
+    <img src="https://flat.badgen.net/npm/v/serverless-prune-versions?icon=npm&label=@latest"></a>
   <a href="https://www.npmjs.com/package/serverless-prune-versions">
     <img src="https://flat.badgen.net/npm/dt/serverless-prune-versions?icon=npm"></a>
   <a href="https://codecov.io/gh/manwaring/serverless-prune-versions">
