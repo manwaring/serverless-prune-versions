@@ -33,7 +33,7 @@
 1. [Installation and setup](#installation-and-setup)
 1. [Configuration](#configuration)
 
-_Feedback appreciated! If you have an idea for how this plugin can be improved [please open an issue](https://github.com/manwaring/serverless-prune-versions/issues/new)._
+_Feedback appreciated! If you have an idea for how this library can be improved (or just a complaint/criticism) [please open an issue](https://github.com/manwaring/serverless-prune-versions/issues/new)._
 
 # Overview
 
