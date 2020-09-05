@@ -1,6 +1,6 @@
 {
   "name": "serverless-prune-versions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Serverless plugin to delete old versions of deployed functions from AWS",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",

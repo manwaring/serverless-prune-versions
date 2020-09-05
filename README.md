@@ -43,7 +43,7 @@ This plugin for the Serverless Framework removes old versions of AWS Lambda func
 
 Install the plugin as a dev dependency in your project
 
-`npm i -D serverless-prune-versions` or `yarn add serverless-prune-versions`
+`npm i serverless-prune-versions -D` or `yarn add serverless-prune-versions -D`
 
 Add the plugin to the `plugins` block of your `serverless.yml` file
 
