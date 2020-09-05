@@ -1,6 +1,6 @@
 {
   "name": "serverless-prune-versions",
-  "version": "0.1.14",
+  "version": "1.0.0",
   "description": "Serverless plugin to delete old versions of deployed functions from AWS",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -10,20 +10,20 @@
     "prepublishOnly": "publish-please guard && npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-typescript": "^7.9.0",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^13.13.5",
-    "babel-jest": "^26.0.1",
-    "codecov": "^3.6.5",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.13",
+    "@types/node": "^14.6.4",
+    "babel-jest": "^26.3.0",
+    "codecov": "^3.7.2",
     "husky": "^4.2.5",
-    "jest": "^26.0.1",
+    "jest": "^26.4.2",
     "publish-please": "^5.5.1",
     "rimraf": "^3.0.2",
-    "ts-jest": "^25.5.0",
-    "typescript": "^3.8.3"
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
   },
   "husky": {
     "hooks": {
