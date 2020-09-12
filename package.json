@@ -1,6 +1,6 @@
 {
   "name": "serverless-prune-versions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Serverless plugin to delete old versions of deployed functions from AWS",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -15,10 +15,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.13",
-    "@types/node": "^14.6.4",
+    "@types/node": "^14.10.1",
     "babel-jest": "^26.3.0",
     "codecov": "^3.7.2",
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "jest": "^26.4.2",
     "publish-please": "^5.5.1",
     "rimraf": "^3.0.2",
