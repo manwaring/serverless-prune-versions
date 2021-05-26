@@ -1,6 +1,6 @@
 {
   "name": "serverless-prune-versions",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serverless plugin to delete old versions of deployed functions from AWS",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -10,25 +10,26 @@
     "prepublishOnly": "publish-please guard && npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.15",
+    "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-env": "^7.14.2",
     "@babel/preset-typescript": "^7.13.0",
-    "@types/jest": "^26.0.22",
-    "@types/node": "^14.14.37",
-    "babel-jest": "^26.6.3",
-    "codecov": "^3.8.1",
-    "husky": "^4.3.0",
-    "jest": "^26.6.3",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.6.1",
+    "babel-jest": "^27.0.1",
+    "codecov": "^3.8.2",
+    "husky": "^6.0.0",
+    "jest": "^27.0.1",
+    "lint-staged": "^11.0.0",
     "publish-please": "^5.5.2",
     "rimraf": "^3.0.2",
-    "ts-jest": "^26.5.4",
+    "ts-jest": "^27.0.0",
     "typescript": "^4.2.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test && npm run build"
-    }
+  "lint-staged": {
+    "./src/**/*.ts": [
+      "eslint --fix"
+    ]
   },
   "publishConfig": {
     "access": "public"
